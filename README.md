@@ -27,4 +27,3 @@ This add-on allows all rolls to be done in parallel and greatly increase the loo
   Clear -- Forces a clear of loot and roll history.
   
   Settings -- Displays the Roll For Loot settings page.
-  

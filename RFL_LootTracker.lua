@@ -53,4 +53,3 @@ function RollForLoot:RefreshLootTracker(self,elapsed)
 		RollTrackerRefreshTime = 0
     end
 end
-
