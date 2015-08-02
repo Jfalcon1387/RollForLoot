@@ -1,9 +1,9 @@
 ## Interface: 60200
 ## Title: |cff00FF96Roll For Loot|r
 ## Notes: |cff00FF96Roll For Loot|r speeds up /roll loot management for raid teams.
-## Version: 6.2.0.r01
+## Version: 6.2.0.r02 Alpha
 ## SavedVariables: RollForLootDB
-## SavedVariablesPerCharacter: RFLSettings, RFL_LootRollHistory, RFLRaidRoster, RFLLootRollIdxByIndex, RFLLootRollIdxByValue, RFLLootRolls, DisplayedRTID
+## SavedVariablesPerCharacter: RFLSettings, RFL_LootRollHistory, RFL_AwardedLoot, RFLRaidRoster, RFLLootRollIdxByIndex, RFLLootRollIdxByValue, RFLLootRolls, DisplayedRTID
 ## Author: Jfalcon-Aerie Peak-US
 
 # Embeded Ace 3.0 Libraries

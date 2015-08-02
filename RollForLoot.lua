@@ -93,6 +93,10 @@ function RollForLoot:OnEnable()
 	if RFL_LootRollHistory == nil then
 		RFL_LootRollHistory = {};
 	end
+	
+	if RFL_AwardedLoot == nil then
+		RFL_AwardedLoot = {};
+	end
 
 	if RFLSettings == nil then
 		RFLSettings = {};
@@ -860,6 +864,7 @@ function RollForLoot:ClearHistory()
 	RFLLootRollIdxByValue = nil;
 	RFLLootRolls = nil;
 	RFL_LootRollHistory = {};
+	RFL_AwardedLoot = {};
 	DisplayedRTID = 1;
 	
 	RollForLoot:Print(L['RFL_LOOTHISTORYCLEARED']);

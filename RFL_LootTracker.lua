@@ -6,8 +6,8 @@ function RollForLoot:BuildLootTrackerFrame()
 		frmRFL_LootTracker = CreateFrame("Frame", "frmRFL_LootTracker", UIParent, "BasicFrameTemplate");
 
 		-- Build Loot Tracker Frame
-		frmRFL_LootTracker:SetWidth(400);
-		frmRFL_LootTracker:SetHeight(550);
+		frmRFL_LootTracker:SetWidth(512);
+		frmRFL_LootTracker:SetHeight(512);
 		frmRFL_LootTracker:SetFrameStrata("DIALOG");
 		frmRFL_LootTracker:SetPoint("CENTER",0,0)
 		frmRFL_LootTracker:SetMovable(true)
@@ -24,10 +24,9 @@ function RollForLoot:BuildLootTrackerFrame()
 		
 		-- Build seperator frame
 		local frmRFL_LTSeperatorTexture = frmRFL_LootTracker:CreateTexture("textureRFLLootSeperator", "ARTWORK" , nil, nil )
-		textureRFLLootSeperator:SetTexture("Interface\\AddOns\\RollForLoot\\Media\\seperator") 
-		textureRFLLootSeperator:SetSize(frmRFL_LootTracker:GetWidth()-6, 50)
-		textureRFLLootSeperator:SetPoint("CENTER", frmRFL_LootTracker, "CENTER", 0, 0)
-		
+		textureRFLLootSeperator:SetTexture("Interface\\AddOns\\RollForLoot\\Media\\rfl_seperator") 
+		textureRFLLootSeperator:SetSize(frmRFL_LootTracker:GetWidth(), 32)
+		textureRFLLootSeperator:SetPoint("CENTER", frmRFL_LootTracker, "CENTER", -1, 0)		
 		-- Build Raid Player Background
 		
 		-- Build Assigned Loot Background
@@ -53,3 +52,4 @@ function RollForLoot:RefreshLootTracker(self,elapsed)
 		RollTrackerRefreshTime = 0
     end
 end
+

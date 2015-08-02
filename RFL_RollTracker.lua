@@ -498,7 +498,7 @@ function RollForLoot:AssignLoot(self)
 				break;
 			end
 		end	
-		
+			
 		--RollForLoot:Print("Assign Loot: " .. playerName);
 		--RollForLoot:Print("Raid Index: " .. raidIndex);
 		--RollForLoot:Print("LootSlot: " .. lootSlot);
@@ -507,10 +507,18 @@ function RollForLoot:AssignLoot(self)
 		--RollForLoot:Print("Loot Candidate: " .. tostring(candidate));
 		
 		if (candidate == playerName) then
-			local dialog = StaticPopup_Show("RFL_AWARDLOOT_CONFIRM", playerName)
+
+		-- Build Loot Assignment Message
+		local RFL_AssignLoot = {};
+		RFL_AssignLoot["Player"] = candidate;
+		RFL_AssignLoot["RaidIndex"] = raidIndex;
+		RFL_AssignLoot["LootID"] = RFLLootRollIdxByIndex[DisplayedRTID];
+		RFL_AssignLoot["RollSpec"] = rollSpec;
+
+		local dialog = StaticPopup_Show("RFL_AWARDLOOT_CONFIRM", playerName)
 			if (dialog) then
-				dialog.data  = lootSlot
-				dialog.data2 = raidIndex
+				dialog.data  = lootSlot;
+				dialog.data2 = RFL_AssignLoot;
 			end
 		else -- search raid for the player
 			local playerfound = false;
@@ -518,10 +526,17 @@ function RollForLoot:AssignLoot(self)
 				local candidate = GetMasterLootCandidate(lootSlot,i);
 				--RollForLoot:Print("LootCandidateSearch: " .. tostring(candidate) .. "i: " .. i);
 				if candidate == playerName then
+					
+					local RFL_AssignLoot = {};
+					RFL_AssignLoot["Player"] = candidate;
+					RFL_AssignLoot["RaidIndex"] = i;
+					RFL_AssignLoot["LootID"] = RFLLootRollIdxByIndex[DisplayedRTID];
+					RFL_AssignLoot["RollSpec"] = rollSpec;
+				
 					local dialog = StaticPopup_Show("RFL_AWARDLOOT_CONFIRM", playerName)
 						if (dialog) then
 							dialog.data  = lootSlot;
-							dialog.data2 = i;
+							dialog.data2 = RFL_AssignLoot;
 						end
 					playerfound = true;
 					break;
@@ -535,9 +550,11 @@ function RollForLoot:AssignLoot(self)
 	end
 end
 
-function RollForLoot:AwardLoot(lootSlot, raidIndex)
+function RollForLoot:AwardLoot(lootSlot, RFL_AssignLoot)
 	
-	GiveMasterLoot(lootSlot, raidIndex);
+	GiveMasterLoot(lootSlot, RFL_AssignLoot["RaidIndex"]);
+	RollForLoot:UpdateLootAwards(RFL_AssignLoot["LootID"], RFL_AssignLoot["Player"], RFL_AssignLoot["RollSpec"]);
+	
 	if not( RollForLoot:MoveToLootRoll("Next")) then
 		frmRFLRollTracker:Hide();
 	end
@@ -545,7 +562,19 @@ function RollForLoot:AwardLoot(lootSlot, raidIndex)
 end
 
 function RollForLoot:UpdateLootAwards(lootID, playerName, rollSpec)
-	--RollForLoot:Print("UpdateLootAwards");
+	if RFL_AwardedLoot[playerName] == nil then
+		RFL_AwardedLoot[playerName] = {};
+		RFL_AwardedLoot[playerName].LootCount = 0;
+	end
+	
+	RFL_AwardedLoot[playerName].LootCount = RFL_AwardedLoot[playerName].LootCount + 1;
+	
+	if  RFL_AwardedLoot[playerName][RFL_AwardedLoot[playerName].LootCount] == nil then
+		RFL_AwardedLoot[playerName][RFL_AwardedLoot[playerName].LootCount] = {};
+	end
+
+	RFL_AwardedLoot[playerName][RFL_AwardedLoot[playerName].LootCount]["LootID"] = lootID;
+	RFL_AwardedLoot[playerName][RFL_AwardedLoot[playerName].LootCount]["RollSpec"] = rollSpec;
 end
 
 function RFLSortBySpec(lhs, rhs)
